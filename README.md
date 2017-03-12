@@ -3,4 +3,4 @@ A Trippy javascript experiment, part of the upload of a series of javascript exp
 Its works by generating a random image, and averaging each pixel to its neighbors each step.
 With only that simple rule, a lot of interesting patterns emerge, unique each time.
 
-https://morpheox.github.io/gravity-simulator/
+https://morpheox.github.io/de-randomizer/
