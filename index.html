@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+	</head>
+	<style type="text/css">
+	#tdd{
+		width:10px;
+		height:10px;
+		}
+		</style>
+	<script type="text/javascript">
+	var N=100;
+	var t=2
+	var rnd=100000;
+
+	var grid=new Array()
+	for (i=0;i<N;i++){
+		grid[i]= new Array()
+		for(j=0;j<N;j++){
+			grid[i][j]=Math.random()*rnd;
+		}
+	}
+	function update(){
+	var grid2=new Array()
+	for (i=0;i<N;i++){
+		grid2[i]= new Array()
+		for(j=0;j<N;j++){
+			grid2[i][j]=grid[i][j];
+		}
+	}
+	var tot,con;
+		for (i=0;i<N;i++){
+
+			for(j=0;j<N;j++){
+				tot=0;
+				con=0;
+				if (i+1>=0 && i+1<N){
+					tot+=grid2[i+1][j];
+					con++
+					if (j+1>=0 && j+1<N){
+						tot+=grid2[i+1][j+1]
+						con++
+					}
+				}
+				if (j+1>=0 && j+1<N){
+					tot+=grid2[i][j+1]
+					con++
+					if (i-1>=0 && i-1<N){
+						tot+=grid2[i-1][j+1];
+						con++
+					}
+				}
+				if (i-1>=0 && i-1<N){
+					tot+=grid2[i-1][j]
+					con++
+					if (j-1>=0 && j-1<N){
+						tot+=grid2[i-1][j-1]
+						con++
+					}
+
+				}
+				if (j-1>=0 && j-1<N){
+					tot+=grid2[i][j-1]
+					con++
+					if (i+1>=0 && i+1<N){
+						tot+=grid2[i+1][j-1];
+						con++
+					}
+				}
+				grid[i][j]=tot/con;
+			}
+		}
+	}
+	var frec=1;
+	function draw()
+	{
+		var c=document.getElementById("canv");
+		var ctx=c.getContext("2d");
+		var g,red,green,blue;
+		for (i=0;i<N;i++){
+
+			for(j=0;j<N;j++){
+				ctx.beginPath();
+				g=grid[i][j];
+				red=parseInt(Math.abs(Math.sin(frec*g)) * 255)
+				green=parseInt(Math.abs(Math.sin(frec*g+2)) * 255)
+				blue=parseInt(Math.abs(Math.sin(frec*g+4)) * 255)
+				ctx.fillStyle="#"+red.toString(16)+green.toString(16)+blue.toString(16);
+				ctx.rect(i*t+1,j*t+1,t,t);
+				ctx.fill();
+				ctx.closePath();
+
+			}
+
+		}
+
+
+	}
+
+
+	function run(){
+		running=window.setInterval(function(){update()}, 50)
+		drawing=window.setInterval(function(){draw()}, 50);
+		}
+	</script>
+	<body>
+	<div style="width:100%;margin-top:50px;width:245px;margin-left:auto;margin-right:auto">
+		<h1>De-Randomizer</h1>
+		<div id="cont" style="border:2px solid black;padding:20px;">
+			<canvas width="200" height="200" id="canv"></canvas><br><br>
+			<input type="button" onclick="run();" value="RUN"/>
+			<input type="button" onclick="draw();update();" value="ONE STEP"/>
+		</div>
+		<br>
+		<a href="https://github.com/Morpheox/de-randomizer">GITHUB</a>
+	</div>
+	</body>
+</html>
